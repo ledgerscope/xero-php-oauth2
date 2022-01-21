@@ -86,31 +86,27 @@ Instructions here for [configuring PHPStorm](https://www.jetbrains.com/help/phps
 
 ## Getting Started
 
-### Create a Xero App
-Follow these steps to create your Xero app
+### Create a Ledgerflow App
+Follow these steps to create your Ledgerflow app
 
-* Create a [free Xero user account](https://www.xero.com/us/signup/api/) (if you don't have one)
-* Login to [Xero developer center](https://developer.xero.com/myapps)
-* Click "New App" link
-* Enter your App name, company url, privacy policy url.
-* Enter the redirect URI (something like http://localhost:8888/pathToApp/callback.php)
-* Agree to terms and condition and click "Create App".
-* Click "Generate a secret" button.
-* Copy your client id and client secret and **save for use later**.
-* Click the "Save" button. Your secret is now hidden.
+* Create a [free Ledgerflow user account](https://flow.ledgerscope.com/Account/Register)
+* Login to your Ledgerflow developer [dashboard](https://flow.ledgerscope.com/Partner/App) and create an API application
+* Copy the credentials from your API app and store them using a secure ENV variable strategy
+* Decide the [neccesary scopes](https://developer.xero.com/documentation/oauth2/scopes) for your app's functionality
+* The source accounting software values are 1004 to return QuickBooks Online data and 1009 to return Sage Business Cloud Accounting data
 
 
 ## How to use the SDK
-Below is starter code with the oAuth 2 flow.  You can copy/paste the code below into 4 separate PHP files and substitute your **ClientId, ClientSecret and RedirectURI**
+Below is starter code with the oAuth 2 flow.  You can copy/paste the code below into 4 separate PHP files and substitute your **ClientId, ClientSecret, source accounting software and RedirectURI**
 
 ### [Download starter code](https://github.com/XeroAPI/xero-php-oauth2-starter)
 
 #### Important 
-The RedirectURI (something like http://localhost:8888/pathToApp/callback.php) in your code needs to point to the callback.php file and match the RedirectURI you set when creating your Xero app. 
+The RedirectURI (something like http://localhost:8888/pathToApp/callback.php) in your code needs to point to the callback.php file and match the RedirectURI you set when creating your Ledgerflow app. 
 
-1. Point your browser to authorization.php, you'll be redirected to Xero where you'll login and select a Xero org to authorize.  We  recommend the **Demo Company** org, since this code will modify data in the org you connect to. 
+1. Point your browser to authorization.php, you'll be redirected to QuickBooks Online / Sage Business Cloud Accounting (depending on the source accounting software value you set in the URL) where you'll login and select an org to authorize.
 2. Once complete, you'll be returned to your app to the redirect URI which should point to the callback.php. 
-3. In callback.php, you'll obtain an access token which we'll use in authorizedResource.php to create, read, update and delete information in the connected Xero org.
+3. In callback.php, you'll obtain an access token which we'll use in authorizedResource.php to create, read, update and delete information in the connected org.
 
 ### authorization.php
 
@@ -125,9 +121,9 @@ The RedirectURI (something like http://localhost:8888/pathToApp/callback.php) in
     'clientId'                => '__YOUR_CLIENT_ID__',   
     'clientSecret'            => '__YOUR_CLIENT_SECRET__',
     'redirectUri'             => 'http://localhost:8888/pathToApp/callback.php',
-    'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
-    'urlAccessToken'          => 'https://identity.xero.com/connect/token',
-    'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
+    'urlAuthorize'            => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/identity/connect/authorize',
+    'urlAccessToken'          => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/connect/token',
+    'urlResourceOwnerDetails' => 'https://xero.api.ledgerscope.com/api.xro/2.0/Organisation'
   ]);
 
   // Scope defines the data your app has permission to access.
@@ -164,9 +160,9 @@ The RedirectURI (something like http://localhost:8888/pathToApp/callback.php) in
     'clientId'                => '__YOUR_CLIENT_ID__',   
     'clientSecret'            => '__YOUR_CLIENT_SECRET__',
     'redirectUri'             => 'http://localhost:8888/pathToApp/callback.php', 
-    'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
-    'urlAccessToken'          => 'https://identity.xero.com/connect/token',
-    'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
+    'urlAuthorize'            => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/identity/connect/authorize',
+    'urlAccessToken'          => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/connect/token',
+    'urlResourceOwnerDetails' => 'https://xero.api.ledgerscope.com/api.xro/2.0/Organisation'
   ]);
    
   // If we don't have an authorization code then get one
@@ -328,9 +324,9 @@ class StorageClass
       'clientId'                => '__YOUR_CLIENT_ID__',
       'clientSecret'            => '__YOUR_CLIENT_SECRET__',
       'redirectUri'             => 'http://localhost:8888/xero-php-oauth2-starter/callback.php',
-      'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
-      'urlAccessToken'          => 'https://identity.xero.com/connect/token',
-      'urlResourceOwnerDetails' => 'https://identity.xero.com/resources'
+      'urlAuthorize'            => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/identity/connect/authorize',
+      'urlAccessToken'          => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/connect/token',
+      'urlResourceOwnerDetails' => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/resources'
     ]);
 
     $newAccessToken = $provider->getAccessToken('refresh_token', [
@@ -503,9 +499,9 @@ The code below shows how to perform the OAuth 2 client credential grant flow.  [
       'clientId'                => '__YOUR_CLIENT_ID__',
       'clientSecret'            => '__YOUR_CLIENT_SECRET__',
       'redirectUri'             => 'http://localhost:8888/xero-php-oauth2-starter/callback.php',
-      'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
-      'urlAccessToken'          => 'https://identity.xero.com/connect/token',
-      'urlResourceOwnerDetails' => 'https://identity.xero.com/resources'
+      'urlAuthorize'            => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/identity/connect/authorize',
+      'urlAccessToken'          => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/connect/token',
+      'urlResourceOwnerDetails' => 'https://xero.api.ledgerscope.com/--SOURCE ACCOUNTING SOFTWARE--/resources'
   ]);
 
   try {
