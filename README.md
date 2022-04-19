@@ -93,7 +93,7 @@ Follow these steps to create your Ledgerflow app
 * Login to your Ledgerflow developer [dashboard](https://flow.ledgerscope.com/Partner/App) and create an API application
 * Copy the credentials from your API app and store them using a secure ENV variable strategy
 * Decide the [neccesary scopes](https://developer.xero.com/documentation/oauth2/scopes) for your app's functionality
-* The source accounting software values are 1004 to return QuickBooks Online data and 1009 to return Sage Business Cloud Accounting data
+* The source accounting software values are 1004 to return QuickBooks Online data and 1009 to return Sage Accounting data
 
 
 ## How to use the SDK
@@ -104,7 +104,7 @@ Below is starter code with the oAuth 2 flow.  You can copy/paste the code below 
 #### Important 
 The RedirectURI (something like http://localhost:8888/pathToApp/callback.php) in your code needs to point to the callback.php file and match the RedirectURI you set when creating your Ledgerflow app. 
 
-1. Point your browser to authorization.php, you'll be redirected to QuickBooks Online / Sage Business Cloud Accounting (depending on the source accounting software value you set in the URL) where you'll login and select an org to authorize.
+1. Point your browser to authorization.php, you'll be redirected to QuickBooks Online / Sage Accounting (depending on the source accounting software value you set in the URL) where you'll login and select an org to authorize.
 2. Once complete, you'll be returned to your app to the redirect URI which should point to the callback.php. 
 3. In callback.php, you'll obtain an access token which we'll use in authorizedResource.php to create, read, update and delete information in the connected org.
 
