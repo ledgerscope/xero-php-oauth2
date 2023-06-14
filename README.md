@@ -183,7 +183,10 @@ The RedirectURI (something like http://localhost:8888/pathToApp/callback.php) in
         'code' => $_GET['code']
       ]);
            
-      $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()->setAccessToken( (string)$accessToken->getToken() );
+      $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()
+        ->setHostIdentity("https://xero.api.ledgerscope.com")
+        ->setAccessToken( (string)$accessToken->getToken() );
+      
       $identityApi = new XeroAPI\XeroPHP\Api\IdentityApi(
         new GuzzleHttp\Client(),
         $config
@@ -342,7 +345,9 @@ class StorageClass
         $newAccessToken->getValues()["id_token"] );
   }
 
-  $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()->setAccessToken( (string)$storage->getSession()['token'] );	
+  $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()
+    ->setHostIdentity("https://xero.api.ledgerscope.com")
+    ->setAccessToken( (string)$storage->getSession()['token'] );	
   
   $accountingApi = new XeroAPI\XeroPHP\Api\AccountingApi(
     new GuzzleHttp\Client(),
