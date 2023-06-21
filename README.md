@@ -185,6 +185,7 @@ The RedirectURI (something like http://localhost:8888/pathToApp/callback.php) in
            
       $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()
         ->setHostIdentity("https://xero.api.ledgerscope.com")
+        ->setHostAccounting("https://xero.api.ledgerscope.com/api.xro/2.0")
         ->setAccessToken( (string)$accessToken->getToken() );
       
       $identityApi = new XeroAPI\XeroPHP\Api\IdentityApi(
@@ -347,6 +348,7 @@ class StorageClass
 
   $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()
     ->setHostIdentity("https://xero.api.ledgerscope.com")
+    ->setHostAccounting("https://xero.api.ledgerscope.com/api.xro/2.0")
     ->setAccessToken( (string)$storage->getSession()['token'] );	
   
   $accountingApi = new XeroAPI\XeroPHP\Api\AccountingApi(
